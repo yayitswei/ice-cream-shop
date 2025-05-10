@@ -1,0 +1,10 @@
+1. cone1.png (you already have this)
+  2. cone2.png
+  3. chocolate.png
+  4. vanilla.png
+  5. strawberry.png
+  6. sprinkles.png
+  7. cherry.png
+  8. customer.png
+  9. happy-customer.png
+  10. sad-customer.png
