@@ -3,24 +3,32 @@ body {
     background-color: #f5f1eb;
     background-image: linear-gradient(#f9f5f0, #e8f4fc);
     margin: 0;
-    padding: 20px;
+    padding: 10px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .container {
-    max-width: 800px;
+    width: 800px;
+    height: 500px;
     margin: 0 auto;
     background: white;
     border-radius: 15px;
-    padding: 20px 20px 40px;
+    padding: 15px 20px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     border: 2px solid #f8d6e0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 h1 {
     text-align: center;
-    font-size: 3.5em;
+    font-size: 2.5em;
     font-weight: bold;
-    margin-bottom: 50px;
+    margin: 10px 0 20px;
     color: #e85a97;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
@@ -31,15 +39,46 @@ h1 {
     align-items: center;
 }
 
+.game-content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.left-section {
+    flex: 0 0 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.center-section {
+    flex: 0 0 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.right-section {
+    flex: 0 0 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    visibility: hidden; /* Hide by default until needed */
+}
+
 .customer {
     position: relative;
-    margin-bottom: 80px;
-    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-top: 10px;
     text-align: center;
 }
 
 .customer img {
-    width: 150px;
+    width: 100px;
     height: auto;
     max-width: 100%;
     object-fit: contain;
@@ -47,23 +86,23 @@ h1 {
 
 .speech-bubble {
     position: absolute;
-    top: -80px;
+    top: -60px;
     left: 50%;
     transform: translateX(-50%);
     background: #fff;
     border: 2px solid #7aceff;
-    border-radius: 20px;
-    padding: 15px;
-    min-width: 200px;
-    min-height: 60px;
+    border-radius: 15px;
+    padding: 8px 12px;
+    min-width: 180px;
+    min-height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     color: #333;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .speech-bubble:after {
@@ -93,7 +132,8 @@ h1 {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    flex-direction: row;
 }
 
 .cone-selection, .flavors, .toppings {
@@ -104,17 +144,17 @@ h1 {
 }
 
 .cone, .flavor, .topping {
-    margin: 5px;
+    margin: 3px;
     cursor: pointer;
     transition: transform 0.2s;
-    border: 3px solid transparent;
-    border-radius: 10px;
-    padding: 5px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 3px;
 }
 
 .cone img, .flavor img, .topping img {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
     max-width: 100%;
 }
@@ -133,9 +173,9 @@ h1 {
 
 #creation-area {
     position: relative;
-    width: 200px;
-    height: 250px;
-    margin-bottom: 20px;
+    width: 150px;
+    height: 180px;
+    margin-bottom: 10px;
 }
 
 #current-cone {
@@ -147,14 +187,14 @@ h1 {
 
 #current-ice-cream {
     position: absolute;
-    bottom: 60px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
 }
 
 #current-topping {
     position: absolute;
-    bottom: 120px;
+    bottom: 80px;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -163,21 +203,21 @@ h1 {
     max-width: 100%;
     height: auto;
     object-fit: contain;
-    max-height: 100px;
+    max-height: 80px;
 }
 
 #serve-button {
-    padding: 12px 25px;
+    padding: 8px 20px;
     background: #f086b4;
     color: white;
     border: none;
-    border-radius: 25px;
-    font-size: 20px;
+    border-radius: 20px;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 15px;
+    margin-top: 5px;
     text-transform: uppercase;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s;
 }
 
@@ -188,34 +228,39 @@ h1 {
 
 #result {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 
 #result-img {
-    width: 200px;
+    width: 100px;
     height: auto;
     max-width: 100%;
     object-fit: contain;
 }
 
 #result-text {
-    margin: 15px 0;
-    font-size: 24px;
+    margin: 10px 0;
+    font-size: 18px;
     font-weight: bold;
     color: #5b8cff;
 }
 
 #next-customer {
-    padding: 12px 25px;
+    padding: 6px 16px;
     background: #5bc3ff;
     color: white;
     border: none;
-    border-radius: 25px;
-    font-size: 18px;
+    border-radius: 20px;
+    font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s;
 }
 

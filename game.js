@@ -38,23 +38,24 @@ function startGame() {
     selectedCone = null;
     selectedFlavor = null;
     selectedTopping = null;
-    
+
     // Clear visual selections
     document.querySelectorAll('.selected').forEach(item => {
         item.classList.remove('selected');
     });
-    
+
     // Clear creation area
     currentCone.innerHTML = '';
     currentIceCream.innerHTML = '';
     currentTopping.innerHTML = '';
-    
-    // Hide result
+
+    // Hide result section completely
+    document.querySelector('.right-section').style.visibility = 'hidden';
     resultDiv.classList.add('hidden');
-    
+
     // Generate new order
     currentOrder = orders[Math.floor(Math.random() * orders.length)];
-    
+
     // Display order
     let orderText = '';
     if (currentOrder.cone === 'cone1') {
@@ -62,15 +63,19 @@ function startGame() {
     } else {
         orderText += 'Cup cone with ';
     }
-    
-    orderText += currentOrder.flavor + ' ice cream and ' + 
+
+    orderText += currentOrder.flavor + ' ice cream and ' +
                 (currentOrder.topping === 'sprinkles' ? 'sprinkles' : 'a cherry') + ', please!';
-    
+
     // Show order with a slight delay to simulate thinking
     orderBubble.textContent = 'Hmm...';
     setTimeout(() => {
         orderBubble.textContent = orderText;
     }, 1000);
+
+    // Make sure all elements are visible for the new customer
+    document.getElementById('creation-area').style.visibility = 'visible';
+    document.getElementById('serve-button').style.visibility = 'visible';
 }
 
 // Event listeners for cones
@@ -137,20 +142,23 @@ serveButton.addEventListener('click', () => {
         alert('Please complete your ice cream first!');
         return;
     }
-    
+
     // Check if order is correct
-    const isCorrect = 
-        selectedCone === currentOrder.cone && 
-        selectedFlavor === currentOrder.flavor && 
+    const isCorrect =
+        selectedCone === currentOrder.cone &&
+        selectedFlavor === currentOrder.flavor &&
         selectedTopping === currentOrder.topping;
-    
+
+    // Show the right section that contains the result
+    document.querySelector('.right-section').style.visibility = 'visible';
+
     // Show result
     resultDiv.classList.remove('hidden');
-    
+
     if (isCorrect) {
         // Play success sound
         // successSound.play();
-        
+
         // Show happy customer
         resultImg.src = 'images/happy-customer.png';
         resultText.textContent = 'Yay! The customer loves it!';
@@ -158,7 +166,7 @@ serveButton.addEventListener('click', () => {
     } else {
         // Play wrong sound
         // wrongSound.play();
-        
+
         // Show sad customer
         resultImg.src = 'images/sad-customer.png';
         resultText.textContent = 'Oops! Not what they ordered.';
