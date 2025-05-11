@@ -29,8 +29,8 @@ const orders = [
 ];
 
 // Game sounds (to be implemented when you have sound files)
-// const successSound = new Audio('sounds/success.mp3');
-// const wrongSound = new Audio('sounds/wrong.mp3');
+const successSound = new Audio('sounds/success.mp3');
+const wrongSound = new Audio('sounds/wrong.mp3');
 
 // Initialize game
 function startGame() {
@@ -157,7 +157,7 @@ serveButton.addEventListener('click', () => {
 
     if (isCorrect) {
         // Play success sound
-        // successSound.play();
+        successSound.play();
 
         // Show happy customer
         resultImg.src = 'images/happy-customer.png';
@@ -165,7 +165,7 @@ serveButton.addEventListener('click', () => {
         resultText.style.color = '#4CAF50';
     } else {
         // Play wrong sound
-        // wrongSound.play();
+        wrongSound.play();
 
         // Show sad customer
         resultImg.src = 'images/sad-customer.png';
