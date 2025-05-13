@@ -5,54 +5,75 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="game-container">
+        <!-- Game Title -->
         <h1>Ice Cream Shop</h1>
-
-        <div class="game-area">
-            <div class="game-content">
-                <div class="left-section">
-                    <div class="customer">
-                        <img id="customer-img" src="images/customer.png" alt="Customer">
-                        <div id="order-bubble" class="speech-bubble"></div>
+        
+        <!-- Customer Section -->
+        <div class="customer-section">
+            <!-- Speech bubble with order/result -->
+            <div class="speech-bubble">
+                <div id="order-content"></div>
+                <div id="result-content" class="hidden">
+                    <div id="result-text"></div>
+                </div>
+            </div>
+            
+            <!-- Customer image -->
+            <img id="customer-img" src="images/customer.png" alt="Customer">
+        </div>
+        
+        <!-- Game Play Area -->
+        <div class="gameplay-area">
+            <!-- Ingredients selection -->
+            <div class="ingredients">
+                <!-- Cones -->
+                <div class="selection-group">
+                    <div class="cone" data-cone="cone1">
+                        <img src="images/cone1.png" alt="Pointy Cone">
                     </div>
-
-                    <div class="workstation">
-                        <div class="cone-selection">
-                            <div class="cone" data-cone="cone1"><img src="images/cone1.png" alt="Cone 1"></div>
-                            <div class="cone" data-cone="cone2"><img src="images/cone2.png" alt="Cone 2"></div>
-                        </div>
-
-                        <div class="flavors">
-                            <div class="flavor" data-flavor="chocolate"><img src="images/chocolate.png" alt="Chocolate"></div>
-                            <div class="flavor" data-flavor="vanilla"><img src="images/vanilla.png" alt="Vanilla"></div>
-                            <div class="flavor" data-flavor="strawberry"><img src="images/strawberry.png" alt="Strawberry"></div>
-                        </div>
-
-                        <div class="toppings">
-                            <div class="topping" data-topping="sprinkles"><img src="images/sprinkles.png" alt="Sprinkles"></div>
-                            <div class="topping" data-topping="cherry"><img src="images/cherry.png" alt="Cherry"></div>
-                        </div>
+                    <div class="cone" data-cone="cone2">
+                        <img src="images/cone2.png" alt="Cup Cone">
                     </div>
                 </div>
-
-                <div class="center-section">
-                    <div id="creation-area">
-                        <div id="current-cone"></div>
-                        <div id="current-ice-cream"></div>
-                        <div id="current-topping"></div>
+                
+                <!-- Flavors -->
+                <div class="selection-group">
+                    <div class="flavor" data-flavor="chocolate">
+                        <img src="images/chocolate.png" alt="Chocolate">
                     </div>
-
-                    <button id="serve-button">Serve Ice Cream!</button>
+                    <div class="flavor" data-flavor="vanilla">
+                        <img src="images/vanilla.png" alt="Vanilla">
+                    </div>
+                    <div class="flavor" data-flavor="strawberry">
+                        <img src="images/strawberry.png" alt="Strawberry">
+                    </div>
                 </div>
-
-                <div class="right-section">
-                    <div id="result" class="hidden">
-                        <img id="result-img" src="" alt="Result">
-                        <div id="result-text"></div>
-                        <button id="next-customer">Next Customer</button>
+                
+                <!-- Toppings -->
+                <div class="selection-group">
+                    <div class="topping" data-topping="sprinkles">
+                        <img src="images/sprinkles.png" alt="Sprinkles">
+                    </div>
+                    <div class="topping" data-topping="cherry">
+                        <img src="images/cherry.png" alt="Cherry">
                     </div>
                 </div>
             </div>
+            
+            <!-- Ice cream creation display -->
+            <div class="creation-display">
+                <div id="current-cone"></div>
+                <div id="current-ice-cream"></div>
+                <div id="current-topping"></div>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button id="serve-button">Serve Ice Cream!</button>
+            <button id="next-button" class="hidden">Next Customer</button>
+            <button id="try-again-button" class="hidden">Try Again</button>
         </div>
     </div>
     

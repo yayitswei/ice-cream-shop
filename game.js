@@ -1,5 +1,7 @@
 // Game elements
-const orderBubble = document.getElementById('order-bubble');
+const orderContent = document.getElementById('order-content');
+const resultContent = document.getElementById('result-content');
+const customerImg = document.getElementById('customer-img');
 const cones = document.querySelectorAll('.cone');
 const flavors = document.querySelectorAll('.flavor');
 const toppings = document.querySelectorAll('.topping');
@@ -7,10 +9,22 @@ const currentCone = document.getElementById('current-cone');
 const currentIceCream = document.getElementById('current-ice-cream');
 const currentTopping = document.getElementById('current-topping');
 const serveButton = document.getElementById('serve-button');
-const resultDiv = document.getElementById('result');
-const resultImg = document.getElementById('result-img');
+const nextButton = document.getElementById('next-button');
+const tryAgainButton = document.getElementById('try-again-button');
 const resultText = document.getElementById('result-text');
-const nextCustomerButton = document.getElementById('next-customer');
+
+// Sound effects
+const successSound = new Audio('sounds/success.mp3');
+const wrongSound = new Audio('sounds/wrong.mp3');
+
+// Error handling for sound effects
+successSound.onerror = function() {
+    console.log('Error loading success sound');
+};
+
+wrongSound.onerror = function() {
+    console.log('Error loading wrong sound');
+};
 
 // Game state
 let selectedCone = null;
@@ -27,10 +41,6 @@ const orders = [
     { cone: 'cone1', flavor: 'strawberry', topping: 'cherry' },
     { cone: 'cone2', flavor: 'vanilla', topping: 'sprinkles' }
 ];
-
-// Game sounds (to be implemented when you have sound files)
-const successSound = new Audio('sounds/success.mp3');
-const wrongSound = new Audio('sounds/wrong.mp3');
 
 // Initialize game
 function startGame() {
@@ -49,33 +59,41 @@ function startGame() {
     currentIceCream.innerHTML = '';
     currentTopping.innerHTML = '';
 
-    // Hide result section completely
-    document.querySelector('.right-section').style.visibility = 'hidden';
-    resultDiv.classList.add('hidden');
+    // Reset customer and buttons
+    customerImg.src = 'images/customer.png';
+    serveButton.classList.remove('hidden');
+    nextButton.classList.add('hidden');
+    tryAgainButton.classList.add('hidden');
+    
+    // Show order content, hide result content
+    orderContent.classList.remove('hidden');
+    resultContent.classList.add('hidden');
 
     // Generate new order
     currentOrder = orders[Math.floor(Math.random() * orders.length)];
 
-    // Display order
-    let orderText = '';
-    if (currentOrder.cone === 'cone1') {
-        orderText += 'Pointy cone with ';
-    } else {
-        orderText += 'Cup cone with ';
-    }
+    // Display order with simplified language and highlighted options
+    let orderText = '<div>I want:</div>';
 
-    orderText += currentOrder.flavor + ' ice cream and ' +
-                (currentOrder.topping === 'sprinkles' ? 'sprinkles' : 'a cherry') + ', please!';
+    // Add cone type with highlight
+    const coneType = currentOrder.cone === 'cone1' ? 'CONE' : 'CUP';
+    orderText += `<div class="highlight">${coneType}</div>`;
+
+    // Add flavor with highlight
+    let flavorText = currentOrder.flavor.toUpperCase();
+    orderText += `<div class="highlight">${flavorText}</div>`;
+
+    // Add topping with highlight
+    const toppingText = currentOrder.topping === 'sprinkles' ? 'SPRINKLES' : 'CHERRY';
+    orderText += `<div class="highlight">${toppingText}</div>`;
+
+    orderText += '<div>Please!</div>';
 
     // Show order with a slight delay to simulate thinking
-    orderBubble.textContent = 'Hmm...';
+    orderContent.textContent = 'Hmm...';
     setTimeout(() => {
-        orderBubble.textContent = orderText;
+        orderContent.innerHTML = orderText;
     }, 1000);
-
-    // Make sure all elements are visible for the new customer
-    document.getElementById('creation-area').style.visibility = 'visible';
-    document.getElementById('serve-button').style.visibility = 'visible';
 }
 
 // Event listeners for cones
@@ -149,33 +167,81 @@ serveButton.addEventListener('click', () => {
         selectedFlavor === currentOrder.flavor &&
         selectedTopping === currentOrder.topping;
 
-    // Show the right section that contains the result
-    document.querySelector('.right-section').style.visibility = 'visible';
+    // Hide order, show result
+    orderContent.classList.add('hidden');
+    resultContent.classList.remove('hidden');
 
-    // Show result
-    resultDiv.classList.remove('hidden');
+    // Hide serve button, show appropriate next button
+    serveButton.classList.add('hidden');
 
     if (isCorrect) {
         // Play success sound
-        successSound.play();
+        try {
+            successSound.currentTime = 0; // Reset sound to start
+            successSound.play().catch(e => console.log('Error playing sound:', e));
+        } catch (e) {
+            console.log('Error with success sound:', e);
+        }
 
         // Show happy customer
-        resultImg.src = 'images/happy-customer.png';
-        resultText.textContent = 'Yay! The customer loves it!';
-        resultText.style.color = '#4CAF50';
+        customerImg.src = 'images/happy-customer.png';
+        resultText.textContent = 'Yay! I love it!';
+        resultText.classList.add('result-success');
+        resultText.classList.remove('result-failure');
+
+        // Show next customer button
+        nextButton.classList.remove('hidden');
     } else {
         // Play wrong sound
-        wrongSound.play();
+        try {
+            wrongSound.currentTime = 0; // Reset sound to start
+            wrongSound.play().catch(e => console.log('Error playing sound:', e));
+        } catch (e) {
+            console.log('Error with wrong sound:', e);
+        }
 
         // Show sad customer
-        resultImg.src = 'images/sad-customer.png';
-        resultText.textContent = 'Oops! Not what they ordered.';
-        resultText.style.color = '#F44336';
+        customerImg.src = 'images/sad-customer.png';
+        resultText.textContent = "That\'s not what I ordered.";
+        resultText.classList.add('result-failure');
+        resultText.classList.remove('result-success');
+
+        // Show try again button
+        tryAgainButton.classList.remove('hidden');
     }
 });
 
 // Event listener for next customer button
-nextCustomerButton.addEventListener('click', startGame);
+nextButton.addEventListener('click', startGame);
+
+// Event listener for try again button
+tryAgainButton.addEventListener('click', () => {
+    // Hide result, show order again
+    resultContent.classList.add('hidden');
+    orderContent.classList.remove('hidden');
+    
+    // Reset customer image
+    customerImg.src = 'images/customer.png';
+    
+    // Hide try again button, show serve button
+    tryAgainButton.classList.add('hidden');
+    serveButton.classList.remove('hidden');
+    
+    // Clear ice cream (but keep order the same)
+    selectedCone = null;
+    selectedFlavor = null;
+    selectedTopping = null;
+    
+    // Clear visual selections
+    document.querySelectorAll('.selected').forEach(item => {
+        item.classList.remove('selected');
+    });
+    
+    // Clear creation area
+    currentCone.innerHTML = '';
+    currentIceCream.innerHTML = '';
+    currentTopping.innerHTML = '';
+});
 
 // Start the game
 startGame();
